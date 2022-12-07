@@ -14,38 +14,39 @@ class LocationController extends GetxController {
   Future<void> saveLocation({
     required TrackedLocation location,
   }) async {
-    await LocationManager.save(location: location);
+    LocationManager.save(location: location);
+    _locations.value = await getAll();
     /* TODo: cambios arturo Usa [LocationManager] para guardar [save] la ubicacion [location] */
   }
 
   Future<List<TrackedLocation>> getAll({
     String? orderBy,
   }) async {
-    return await LocationManager.getAll();
+    return LocationManager.getAll();
     /* TODo: cambios arturo Usa [getAll] de [LocationManager] para obtener la lista de ubicaciones guardadas y retornalas */
   }
 
   Future<void> updateLocation({required TrackedLocation location}) async {
     LocationManager.update(location: location);
+    _locations.value = await getAll();
     /* TODo: cambios arturo Usa [LocationManager.update] para actualizar la ubicacion y luego obten todas las ubicaciones de nuevo */
   }
 
   Future<void> deleteLocation({required TrackedLocation location}) async {
-    /* TODO: Con [LocationManager.delete] elimina la ubicacion y luego usa [removeWhere] para eliminar la ubicacion de [_locations.value] usando [_locations.update de GetX] */
-    /* TODO: Ejemplo [https://github.com/jonataslaw/getx/blob/master/documentation/en_US/state_management.md]
-     */ 
-      
-      LocationManager.delete(location: location, removeWhere: _locations.obs);
-      final user = User().obs;
-
-      user.update( (user) {
-      user.name = 'Jonny';
-      user.age = 18;
-      });
-     
+    /* TOD0: cambios arturo Con [LocationManager.delete] elimina la ubicacion y luego usa [removeWhere] para eliminar la ubicacion de [_locations.value] usando [_locations.update de GetX] */
+    /* TODo: cambios arturo Ejemplo [https://github.com/jonataslaw/getx/blob/master/documentation/en_US/state_management.md]
+     */
+    LocationManager.delete(location: location);
+    _locations.update((location) {
+      _locations.value
+          .removeWhere((element) => element.toString == location.toString);
+    });
+    _locations.value = await getAll();
   }
 
   Future<void> deleteAll() async {
-    /* TODO: Con [LocationManager.deleteAll] elimina todas las ubicaciones guardas y asigna una lista vacia a [_locations.value] */
+    /* TODo: cambios arturo Con [LocationManager.deleteAll] elimina todas las ubicaciones guardas y asigna una lista vacia a [_locations.value] */
+    LocationManager.deleteAll();
+    _locations.value = [];
   }
 }

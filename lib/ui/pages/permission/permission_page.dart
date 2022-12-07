@@ -20,7 +20,8 @@ class _LocationState extends State<PermissionPage> {
   void initState() {
     super.initState();
     controller = Get.find();
-    // TODO: Asigna a _permissionStatus el futuro que obtiene el estado de los permisos.;
+    // TODo: cambios arturo Asigna a _permissionStatus el futuro que obtiene el estado de los permisos.;
+    _permissionStatus = controller.permissionStatus;
   }
 
   @override
@@ -42,12 +43,15 @@ class _LocationState extends State<PermissionPage> {
                       (_) => Get.offAll(() => ContentPage()),
                     ),
                   );
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
               /* TODO: Busca el controlador de ubicacion [LocationController] con [Get.find],
                inicializalo [initialize] y cuando el futuro se complete [then] usando [WidgetsBinding.instance.addPostFrameCallback]
                navega usando [Get.offAll] a [ContentPage] */
 
               // TODO: Mientras el futuro se completa muestra un CircularProgressIndicator
-              
+
             } else if (status == LocationPermission.unableToDetermine ||
                 status == LocationPermission.denied) {
               return Center(
@@ -56,18 +60,29 @@ class _LocationState extends State<PermissionPage> {
                       setState(() {
                         // TODO: Actualiza el futuro _permissionStatus con requestPermission
                         // TODO: y setState para que el FutureBuilder vuelva a renderizarse.
+                        _permissionStatus = controller.requestPermission();
+                        setState(() {});
                       });
                     },
                     child: const Text("Solicitar Permisos")),
               );
             } else {
               // TODO: Muestra un texto cuando el usuario a denegado el permiso permanentemente
+              return const Center(
+                child: Text('Permisos denegados'),
+              );
             }
           } else if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasError) {
             // TODO: Muestra un texto con el error si ocurre.
+            return Center(
+              child: Text(snapshot.hasError.toString()),
+            );
           } else {
             // TODO: Mientras el futuro se completa muestra un CircularProgressIndicator
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),

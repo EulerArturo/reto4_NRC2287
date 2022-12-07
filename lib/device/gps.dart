@@ -1,15 +1,14 @@
-import 'package:f_gps_tracker/domain/use_cases/gps_manager.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GpsSensor {
-  Future<LocationPermission> get permissionStatus async => await GpsManager
-      .permissionStatus; // Usando GeoLocator verifica el estado de los permisos
+  Future<LocationPermission> get permissionStatus async => Geolocator
+      .checkPermission(); // Usando GeoLocator verifica el estado de los permisos
 
-  Future<Position> get currentLocation async => await GpsManager
-      .currentLocation; // Usando GeoLocator obten la posicion actual
+  Future<Position> get currentLocation async => Geolocator
+      .getCurrentPosition(); // Usando GeoLocator obten la posicion actual
 
-  Future<LocationAccuracyStatus> get locationAccuracy async => await GpsManager
-      .locationAccuracy; // Usando GeoLocator verifica la precision de la ubicacion con soporte para web
+  Future<LocationAccuracyStatus> get locationAccuracy async => Geolocator
+      .getLocationAccuracy(); // Usando GeoLocator verifica la precision de la ubicacion con soporte para web
 
   Future<LocationPermission> requestPermission() async {
     // TODo: cambios arturo Debes configurar correctamente el AndroidManifest.xml para Android:
@@ -23,6 +22,6 @@ class GpsSensor {
     //    <string>Esta aplicación necesita acceso a la ubicación cuando está en segundo plano.</string>
 
     // TODo: cambios arturo Usando GeoLocator solicita los permisos
-    return await GpsManager.requestPermission();
+    return Geolocator.requestPermission();
   }
 }

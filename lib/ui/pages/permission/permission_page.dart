@@ -28,9 +28,13 @@ class _LocationState extends State<PermissionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("GPS Tracker"),
+        centerTitle: true,
+        toolbarHeight: 100,
+        backgroundColor: Colors.brown[700],
+        title: const Text("GPS grupo-14 NRC2287 ", style: TextStyle(fontSize: 40 ), ),
       ),
       body: FutureBuilder<LocationPermission>(
+        
         future: _permissionStatus,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
@@ -46,40 +50,49 @@ class _LocationState extends State<PermissionPage> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-              /* TODO: Busca el controlador de ubicacion [LocationController] con [Get.find],
+              /* TODo: cambios arturo Busca el controlador de ubicacion [LocationController] con [Get.find],
                inicializalo [initialize] y cuando el futuro se complete [then] usando [WidgetsBinding.instance.addPostFrameCallback]
                navega usando [Get.offAll] a [ContentPage] */
 
-              // TODO: Mientras el futuro se completa muestra un CircularProgressIndicator
+              // TODo: cambios arturo Mientras el futuro se completa muestra un CircularProgressIndicator
 
             } else if (status == LocationPermission.unableToDetermine ||
                 status == LocationPermission.denied) {
               return Center(
-                child: ElevatedButton(
+                
+                child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.brown[700],
+                      minimumSize: const Size(400,70)
+                      
+                    ),
+                    icon: const Icon(Icons.gps_fixed_rounded),
                     onPressed: () {
                       setState(() {
-                        // TODO: Actualiza el futuro _permissionStatus con requestPermission
-                        // TODO: y setState para que el FutureBuilder vuelva a renderizarse.
+                        // TODo: cambios arturo Actualiza el futuro _permissionStatus con requestPermission
+                        // TODo: cambios arturo y setState para que el FutureBuilder vuelva a renderizarse.
                         _permissionStatus = controller.requestPermission();
                         setState(() {});
                       });
-                    },
-                    child: const Text("Solicitar Permisos")),
+                    }, label: const Text('  Solicitar permisos GPS', style: TextStyle(fontSize: 30),),
+                    // child: const Text("Solicitar Permisos")
+                    ),
+                    
               );
             } else {
-              // TODO: Muestra un texto cuando el usuario a denegado el permiso permanentemente
+              // TODo: cambios arturo Muestra un texto cuando el usuario a denegado el permiso permanentemente
               return const Center(
                 child: Text('Permisos denegados'),
               );
             }
           } else if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasError) {
-            // TODO: Muestra un texto con el error si ocurre.
+            // TODo: cambios arturo Muestra un texto con el error si ocurre.
             return Center(
               child: Text(snapshot.hasError.toString()),
             );
           } else {
-            // TODO: Mientras el futuro se completa muestra un CircularProgressIndicator
+            // TODo: cambios arturo Mientras el futuro se completa muestra un CircularProgressIndicator
             return const Center(
               child: CircularProgressIndicator(),
             );

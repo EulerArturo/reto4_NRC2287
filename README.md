@@ -6,8 +6,6 @@ Video: https://uninorte-my.sharepoint.com/:v:/g/personal/sastoquek_uninorte_edu_
 
 Funcional con Android, iOS y Web
 
-![Tracker](https://user-images.githubusercontent.com/25647254/192416251-fdae4ea5-3149-4c08-bd3b-b37e23c48f34.gif)
+![Tracker](https://i.imgur.com/L1WYRYQ.gif)
 
-Solución:
 
-https://github.com/MisionTIC4b/f_gps_tracker
